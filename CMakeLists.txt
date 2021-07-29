@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
+
 project(joy_cmd)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
@@ -10,7 +11,7 @@ project(joy_cmd)
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   roscpp
-  stg_msgs
+  std_msgs
   sensor_msgs
 )
 
