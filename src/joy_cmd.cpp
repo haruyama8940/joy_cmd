@@ -40,11 +40,11 @@ std_msgs::String msg;
 }
 
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "joy_cmd");        // ノードの初期化（ノード名を"srv_test"に設定）
-  ros::NodeHandle nh;                       // ノードハンドルの生成
+  ros::init(argc, argv, "joy_cmd");        
+  ros::NodeHandle nh;                       
   joy_pub = nh.advertise<std_msgs::String>("joy_cmd", 10);
   joy_sub = nh.subscribe("joy", 10, Joy_Callback);
   ROS_INFO("muripo");
-  ros::spin();                              // リクエストの無限待ち
+  ros::spin();                              
   return 0;
 }
