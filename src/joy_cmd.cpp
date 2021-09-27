@@ -77,6 +77,7 @@ uint64_t get_rand_range( uint64_t min_vel, uint64_t max_vel ){
 }
 
 int main(int argc, char **argv) {
+<<<<<<< HEAD
   ros::init(argc, argv, "joy_cmd");        // ノードの初期化（ノード名を"srv_test"に設定）
   ros::NodeHandle nh;                       // ノードハンドルの生成
   //joy_pub = nh.advertise<std_msgs::String>("joy_cmd", 10);
@@ -92,5 +93,13 @@ int main(int argc, char **argv) {
   
   
   ros::spin();                              // リクエストの無限待ち
+=======
+  ros::init(argc, argv, "joy_cmd");        
+  ros::NodeHandle nh;                       
+  joy_pub = nh.advertise<std_msgs::String>("joy_cmd", 10);
+  joy_sub = nh.subscribe("joy", 10, Joy_Callback);
+  ROS_INFO("muripo");
+  ros::spin();                              
+>>>>>>> d3205cbfca409198b3909dac65c1ebccae8a3b3f
   return 0;
 }
