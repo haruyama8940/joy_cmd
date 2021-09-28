@@ -1,2 +1,2 @@
 string cmd_word
-int8[] cmd_array
+int8[3] cmd_array
