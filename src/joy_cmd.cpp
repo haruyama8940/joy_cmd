@@ -15,12 +15,13 @@ ros::Publisher joy_pub;
 std::vector<int> joy_b;
 sensor_msgs::Joy cmd_topic;
 
-std::vector<std::string> cmd_list = {"go_stright","turn_right","turn_left"};
+std::vector<std::string> cmd_list = {"continue","go_stright","turn_right","turn_left"};
 //std::array<int,3> data{0,0,0};
-int list[3][3]={
-                {1,0,0},
-                {0,1,0},
-                {0,0,1},
+int list[4][4]={
+                {100,0,0,0},
+                {0,100,0,0},
+                {0,0,100,0},
+                {0,0,0,100}
                 };
              
 void Joy_Callback(const sensor_msgs::Joy& joy_msg)
@@ -43,7 +44,7 @@ void Joy_Callback(const sensor_msgs::Joy& joy_msg)
     {
       //msg.data="turn_right";
       cmd_data.cmd_word=cmd_list[1];
-      for ( i = 0; i < 3; i++)
+      for ( i = 0; i < 4; i++)
       {
       cmd_data.cmd_array[i]=list[1][i];
       }
@@ -56,7 +57,7 @@ void Joy_Callback(const sensor_msgs::Joy& joy_msg)
     //msg.data="turn_left";
     //msg.data=cmd_list[2];
       cmd_data.cmd_word=cmd_list[2];
-      for ( i = 0; i < 3; i++)
+      for ( i = 0; i < 4; i++)
       {
       cmd_data.cmd_array[i]=list[2][i];
       }
@@ -68,9 +69,23 @@ void Joy_Callback(const sensor_msgs::Joy& joy_msg)
     //msg.data="go_straight";
     //msg.data=cmd_list[0];
     cmd_data.cmd_word=cmd_list[0];
-    for ( i = 0; i < 3; i++)
+    for ( i = 0; i < 4; i++)
     {
     cmd_data.cmd_array[i]=list[0][i];
+    }
+    joy_pub.publish(cmd_data);
+    ROS_INFO("stright");
+    }
+}
+
+ if (joy_msg.buttons[4]==1)
+    {
+    //msg.data="go_straight";
+    //msg.data=cmd_list[0];
+    cmd_data.cmd_word=cmd_list[0];
+    for ( i = 0; i < 4; i++)
+    {
+    cmd_data.cmd_array[i]=list[3][i];
     }
     joy_pub.publish(cmd_data);
     ROS_INFO("go");
@@ -91,7 +106,7 @@ int main(int argc, char **argv) {
   //joy_sub = nh.subscribe("joy", 10, Joy_Callback);
   ROS_INFO("muripo");                
   //joy_pub = nh.advertise<std_msgs::String>("joy_cmd", 10);
-  joy_pub = nh.advertise<joy_cmd::dir_cmd_msg>("cmd_data", 10);
+  joy_pub = nh.advertise<joy_cmd::dir_cmd_msg>("cmd_data", 1);
   joy_sub = nh.subscribe("joy", 10, Joy_Callback);
   ROS_INFO("muripo");
   ros::spin();                              
