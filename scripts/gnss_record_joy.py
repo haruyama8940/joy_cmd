@@ -11,8 +11,8 @@ from sensor_msgs.msg import NavSatFix,Joy
 
 class record_Node:
     def __init__(self):
-        self.joy_sub = ("joy",Joy, self.joy_callback)
-        self.nav_sat =("Navsat",NavSatFix,self.navsatfix_callback)
+        self.joy_sub = rospy.Subscriber("/joy",Joy, self.joy_callback)
+        self.nav_sat =rospy.Subscriber("/ublox/fix",NavSatFix,self.navsatfix_callback)
         self.write_flag = False
         self.write_dir = roslib.packages.get_pkg_dir('joy_cmd')
 
@@ -27,7 +27,7 @@ class record_Node:
             }, YAML, default_flow_style=False)
 
     def joy_callback(self,joy_data):
-        if joy_data.buttons[1] == 1:
+        if joy_data.buttons[0] == 1:
             self.write_flag = True
         else :
             self.write_flag = False
@@ -39,6 +39,7 @@ class record_Node:
 
     def record_msg_for_yaml(self):
         if self.write_flag == True:
+            print("write")
             self.coordinate2yaml(self.write_dir + '/Navsat_tsudanuma.yaml',self.nav_status,self.nav_latitude,self.nav_longitude)
         else :
             pass
